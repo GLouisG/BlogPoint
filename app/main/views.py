@@ -51,7 +51,8 @@ def delete(id):
     current_post = Blog.query.filter_by(id=id).first()
     if current_post.user != current_user:
        abort(404)
-    db.session.delete(current_post)   
+    db.session.delete(current_post)  
+    return redirect(url_for('.index'))
 
 @main.route('/index/<int:id>/delcomm',methods = ['GET','POST'])
 @login_required
@@ -59,5 +60,50 @@ def delete_comm(id):
     current_comm = Comment.query.filter_by(id=id).first()
     if current_comm.user != current_user:
        abort(404)
-    db.session.delete(current_comm)  
+    db.session.delete(current_comm) 
+    return redirect(url_for('.index')) 
+
+@main.route('/user/<uname>')
+def profile(uname):
+    user = User.query.filter_by(username = uname).first()
+    user_id = current_user._get_current_object().id
+    blogs = Blog.query.filter_by(user_id = user_id).all()
+
+    if user is None:
+        abort(404)
+
+    return render_template("profile/profile.html", user=user, blogs = blogs)
+
+
+@main.route('/blogs/<uname>/updateprofile', methods = ['GET','POST'])
+@login_required
+def update_profile(uname):
+    form = UpdateProfile()
+    user = User.query.filter_by(username = uname).first()
+    if user is None:
+        abort(404)
+    if form.validate_on_submit():
+        user.bio = form.bio.data
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect(url_for('.profile',uname=user.username))
+
+    return render_template('profile/update.html',form =form)
+
+
+@main.route('/update/<int:id>',methods = ['GET','POST'])
+@login_required
+def blog_updater(id):
+    ablog = Blog.query.filter_by(id=id).first()
+    if ablog.user != current_user:
+      abort(404)
+    form = BlogUpdate()
+    if form.validate_on_submit():
+        ablog.title = form.title.data
+        ablog.content = form.content.data
+        db.session.add(ablog)
+        db.session.commit()
+        return redirect(url_for('main.index'))
+    return render_template('update_blog.html',form = form)    
 
