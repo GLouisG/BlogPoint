@@ -16,7 +16,6 @@ class User(db.Model, UserMixin):
   email = db.Column(db.String(255), nullable=False, unique=True)
   bio = db.Column(db.String(255))
   pass_secure = db.Column(db.String(255))
-  dp_path = db.Column(db.String())
   blog = db.relationship('Blog', backref='user', lazy =True)
   comment = db.relationship('Comment', backref='user', lazy = True)
   sub = db.relationship('Sub', backref='user', lazy = True)
