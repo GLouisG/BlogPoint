@@ -43,4 +43,21 @@ def comment(blog_id):
         return redirect(url_for('.comment', blog_id=blog_id))
     print(blog)
     return render_template('comment.html', form = form, blog = blog, all_comments=all_comments)    
-    
+
+
+@main.route('/index/<int:id>/delete',methods = ['GET','POST'])
+@login_required
+def delete(id):
+    current_post = Blog.query.filter_by(id=id).first()
+    if current_post.user != current_user:
+       abort(404)
+    db.session.delete(current_post)   
+
+@main.route('/index/<int:id>/delcomm',methods = ['GET','POST'])
+@login_required
+def delete_comm(id):
+    current_comm = Comment.query.filter_by(id=id).first()
+    if current_comm.user != current_user:
+       abort(404)
+    db.session.delete(current_comm)  
+
