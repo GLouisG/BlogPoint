@@ -19,4 +19,17 @@ class User(db.Model, UserMixin):
   dp_path = db.Column(db.String())
   blog = db.relationship('Blog', backref='user', lazy =True)
   comment = db.relationship('Comment', backref='user', lazy = True)
-  
+class Blog (db.Model):
+  __tablename__ = 'blogs'
+  id = db.Column(db.Integer, primary_key=True)
+  content = db.Column(db.String)
+  user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+  post_time = db.Column(db.DateTime, default=datetime.utcnow())
+  comments = db.relationship('Comment', backref='blog', lazy = True)
+
+  def save_blog(self):
+      db.session.add(self)
+      db.session.commit()
+
+  def __repr__(self):
+        return f'Blog{self.content}'
