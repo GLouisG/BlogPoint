@@ -107,3 +107,19 @@ def blog_updater(id):
         return redirect(url_for('main.index'))
     return render_template('update_blog.html',form = form)    
 
+@main.route('/subscription', methods = ['POST','GET'])
+@login_required
+def subscription():
+    subber = Sub.query.filter_by(email=current_user.email).first()
+    if subber:
+       db.session.delete(subber)
+       db.session.commit()
+       return redirect(url_for('.index'))
+    else:
+      email = current_user._get_current_object().email
+      user_id = current_user._get_current_object().id  
+      new_sub_object = Sub(email = email, user_id=user_id)
+      new_sub_object.save_sub()
+      return redirect(url_for('.index'))  
+    return redirect(url_for('.index'))     
+
