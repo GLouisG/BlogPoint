@@ -29,7 +29,7 @@ class User(db.Model, UserMixin):
   def verify_password(self, password):
     return check_password_hash(self.pass_secure, password)
   def __repr__(self):
-      return f'User{self.username}'    
+      return f'User:{self.username}'    
 
 class Blog (db.Model):
   __tablename__ = 'blogs'
@@ -44,7 +44,7 @@ class Blog (db.Model):
       db.session.commit()
 
   def __repr__(self):
-        return f'Blog{self.content}'
+        return f'Blog:{self.content}'
 
 class Comment(db.Model):
   __tablename__ = 'comments'
@@ -63,3 +63,9 @@ class Comment(db.Model):
 
   def __repr__(self):
     return f'Comment:{self.content}'    
+
+class Quotes:
+      def __init__(self,id, author,quote):
+            self.id =id
+            self.author = author
+            self.quote = quote    
