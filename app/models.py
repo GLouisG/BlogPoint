@@ -46,3 +46,20 @@ class Blog (db.Model):
   def __repr__(self):
         return f'Blog{self.content}'
 
+class Comment(db.Model):
+  __tablename__ = 'comments'
+  id = db.Column(db.Integer, primary_key=True)
+  blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'))
+  content = db.Column(db.String(), nullable=False)
+  user_id = db.Column(db.Integer, db.ForeignKey('blogs.id'))
+
+  def save_comment(self):
+    db.session.add(self)
+    db.session.commit()
+  @classmethod
+  def get_comments(cls, blog_id):
+    comments = Comment.query.filter_by(blog_id=blog_id)
+    return comments
+
+  def __repr__(self):
+    return f'Comment:{self.content}'    
