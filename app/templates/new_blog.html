@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block content %}
+<body style="height: 100vh; width: 100vw;">
+  <div class="container" style="background-image:url(https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/pf-s86-pm-1522_3.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=a9b71875c83b98b056e4525a6f56043d);background-size: cover; height: 100%; width: 100%">
+    <div class="row">
+        <div class="col-md-2"> </div>
+        <div class="col-md-8">
+            <h3 class="text-center m-5" style="color:rgb(124, 23, 23);"><strong>Create New Blog</strong></h3>
+            <br><br>
+            <div class="jumbotron" style="background-color: #fc755aff;">
+                {{wtf.quick_form(form)}}
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+{% endblock %}
