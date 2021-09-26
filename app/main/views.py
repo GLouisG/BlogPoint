@@ -9,11 +9,6 @@ from .. import db, photos
 def index():
   posts = Blog.query.all()
   blogs = posts.reverse()
-  # status = None
-  # if current_user.posts:
-  #   status = 'Author'
-  # else:
-  #   status = 'Dedicated Reader'
   return render_template('index.html', blogs=blogs)  
 @main.route('/create_new',methods = ['GET','POST'])
 @login_required  
@@ -68,11 +63,16 @@ def profile(uname):
     user = User.query.filter_by(username = uname).first()
     user_id = current_user._get_current_object().id
     blogs = Blog.query.filter_by(user_id = user_id).all()
+    status = None
+    if current_user.posts:
+      status = 'Author'
+    else:
+      status = 'Dedicated Reader'    
 
     if user is None:
         abort(404)
 
-    return render_template("profile/profile.html", user=user, blogs = blogs)
+    return render_template("profile/profile.html", user=user, blogs = blogs, status=status)
 
 
 @main.route('/blogs/<uname>/updateprofile', methods = ['GET','POST'])
