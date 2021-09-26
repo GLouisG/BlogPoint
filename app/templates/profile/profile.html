@@ -1,0 +1,54 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+<div class="container">
+
+<div class="row">
+
+
+  <div class="col-md-4">
+    <h3> {{user.username| capitalize}} </h3>
+    <h4>Status: {{status}}</h4>
+
+    {% if user.bio %}
+      <p> {{user.bio}}</p>
+
+    {%else%}
+      <p> {{user.username| capitalize}} has no bio </p>
+    {% endif %}
+
+    {% if user == current_user %}
+      <a href="{{url_for('main.update_profile',uname=user.username)}}">Edit profile</a>
+    {% endif %}
+
+  </div>
+  <div class="col-md-8">
+    {%if blogs%}
+    {%for blog in blogs%}
+      <div class="card blogcard" style="background-color: #5b84b1ff; color: #fc766aff">
+        <h1 class="blogtitle" style="color: #990011ff;">{{blog.title}}</h1>
+        <p>{{blog.content}}</p>
+        <h4>{{blog.user}}</h4>
+        <span class="foot"><a href="{{url_for('main.comment',blog_id = blog.id)}}"
+          class="btn btn-outline-info btn-sm"
+          style="margin-left: 10px;font-weight: bold;">Comment</a></span>
+        <span class="foot"><a href="{{url_for('main.blog_updater',id = blog.id)}}"
+          class="btn btn-outline-info btn-sm"
+          style="margin-left: 10px;font-weight: bold;">Update</a></span>          
+        <span class="foot"><a href="{{url_for('main.delete',id = blog.id)}}"
+          class="btn btn-outline-info btn-sm"
+          style="margin-left: 10px;font-weight: bold;">Delete</a></span>  
+        <span class="foot"><a href="{{url_for('main.subscription',author = blog.user.username)}}"
+          class="btn btn-outline-info btn-sm"
+          style="margin-left: 10px;font-weight: bold;">Subscribe</a></span>  
+      </div>
+    {%endfor%}
+    {%else%}
+    <p>None</p>
+    {%endif%}
+  </div>
+
+</div>
+</div>
+{% endblock %}
