@@ -3,7 +3,7 @@ from .models import Quotes
 
 base_url = 'http://quotes.stormconsultancy.co.uk/random.json'
 
-def find_quotes(info):
+def find_quotes():
 
   with urllib.request.urlopen(base_url) as url:
     get_quote_data = url.read()

@@ -1,15 +1,18 @@
+from app.requests import find_quotes
 from . import main
 from flask import render_template, request, redirect, url_for, abort,flash
 from ..models import User, Blog, Comment, Sub
 from flask_login import login_required, current_user
 from .forms import BlogForm, UpdateProfile, BlogUpdate, CommentForm
 from .. import db, photos
+from ..email import mail_message
 
 @main.route('/')
 def index():
   posts = Blog.query.all()
   blogs = posts.reverse()
-  return render_template('index.html', blogs=blogs)  
+  thequote = find_quotes()
+  return render_template('index.html', blogs=blogs, thequote=thequote)  
 @main.route('/create_new',methods = ['GET','POST'])
 @login_required  
 def new_blog():
@@ -21,6 +24,9 @@ def new_blog():
        new_blog_obj = Blog(content = content,title =title,user_id=user_id)
        new_blog_obj.save_blog()
        return redirect(url_for('main.index'))
+    followers = Sub.query.filter_by(writer = current_user.username).all()   
+    for subscriber in  followers:
+        mail_message("New post!", "email/subscriber", subscriber.email, user=subscriber)     
     return render_template('new_blog.html', form = form)
 
 @main.route('/comment/<int:blog_id>', methods = ['POST','GET'])
@@ -107,9 +113,9 @@ def blog_updater(id):
         return redirect(url_for('main.index'))
     return render_template('update_blog.html',form = form)    
 
-@main.route('/subscription', methods = ['POST','GET'])
+@main.route('/subscription/<author>', methods = ['POST','GET'])
 @login_required
-def subscription():
+def subscription(author):
     subber = Sub.query.filter_by(email=current_user.email).first()
     if subber:
        db.session.delete(subber)
@@ -117,8 +123,8 @@ def subscription():
        return redirect(url_for('.index'))
     else:
       email = current_user._get_current_object().email
-      user_id = current_user._get_current_object().id  
-      new_sub_object = Sub(email = email, user_id=user_id)
+      writer = author  
+      new_sub_object = Sub(email = email, writer=writer)
       new_sub_object.save_sub()
       return redirect(url_for('.index'))  
     return redirect(url_for('.index'))     

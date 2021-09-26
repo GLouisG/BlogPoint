@@ -18,7 +18,6 @@ class User(db.Model, UserMixin):
   pass_secure = db.Column(db.String(255))
   blog = db.relationship('Blog', backref='user', lazy =True)
   comment = db.relationship('Comment', backref='user', lazy = True)
-  sub = db.relationship('Sub', backref='user', lazy = True)
   @property
   def password(self):
       raise AttributeError("You can't read the password attribute" )
@@ -83,7 +82,7 @@ class Comment(db.Model):
 class Sub(db.Model):   
   __tablename__ = 'subs'
   id = db.Column(db.Integer, primary_key=True)  
-  user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+  writer = db.Column(db.String())
   email_add = db.Column(db.String())
   def save_sub(self):
       db.session.add(self)
