@@ -11,7 +11,8 @@ def find_quotes():
 
 
     if get_quote_response:
+      id = get_quote_response.get('id')
       author = get_quote_response.get('author')
       quote = get_quote_response.get('quote')
-      quote_obj = Quotes(author, quote)
+      quote_obj = Quotes(id, author, quote)
   return quote_obj  

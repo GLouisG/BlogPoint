@@ -12,7 +12,7 @@ def index():
   posts = Blog.query.all()
   blogs = posts.reverse()
   thequote = find_quotes()
-  return render_template('index.html', blogs=blogs, thequote=thequote)  
+  return render_template("index.html", blogs=blogs, thequote=thequote)  
 @main.route('/create_new',methods = ['GET','POST'])
 @login_required  
 def new_blog():
