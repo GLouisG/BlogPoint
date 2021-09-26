@@ -1,7 +1,13 @@
+*{
+  margin: 0 0;
+  border: 0 0;
+  padding: 0 0;
+}
 body{
   background: url(https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/pf-s86-pm-1522_3.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=a9b71875c83b98b056e4525a6f56043d);
   background-size: cover;
   background-repeat: no-repeat;
+  text-align: center
 }
 .blogcard{
   background-color:#990011ff ;
@@ -9,7 +15,8 @@ body{
   border: 1px solid #FC766AFF;
 }
 .blogtitle{
-color:   #990011ff;
+margin-top: 0px;  
+color:   rgb(240, 240, 240);
 }
 .quotecard{
   background-color:rgb(236, 116, 3) ;

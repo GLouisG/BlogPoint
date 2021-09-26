@@ -9,7 +9,7 @@ from ..email import mail_message
 
 @main.route('/')
 def index():
-  blogs = Blog.query.all()
+  blogs = Blog.query.limit(5).all()
   thequote = find_quotes()
   return render_template("index.html", blogs=blogs, thequote=thequote)  
 @main.route('/create_new',methods = ['GET','POST'])

@@ -18,7 +18,7 @@
 
 {%if all_comments%}
 {%for comment in all_comments%}
-<div class="card" style="background-color: #5b84b1ff; color:#fc766aff ; border:1px solid red;">
+<div class="card" style="background-color: rgb(0, 0, 0); color:#fc766aff ; border:1px solid red;">
 <h5>{{comment.comment}}</h5>
 <p>{{comment.user.username}}</p>
 <span class="foot"><a href="{{url_for('main.delete_comm',id = comment.id)}}"

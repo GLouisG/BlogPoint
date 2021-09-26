@@ -26,8 +26,8 @@
   <div class="col-md-8">
     {%if blogs%}
     {%for blog in blogs%}
-      <div class="card blogcard" style="background-color: #5b84b1ff; color: #fc766aff">
-        <h1 class="blogtitle" style="color: #990011ff;">{{blog.title}}</h1>
+      <div class="card blogcard" style="background-color: rgb(0, 0, 0); color: #fc766aff">
+        <h1 class="blogtitle" style=" font-family: 'Staatliches';color: #990011ff; font-weight: bold; font-family: 'Staatliches';">{{blog.title}}</h1>
         <p>{{blog.content}}</p>
         <h4>{{blog.user}}</h4>
         <span class="foot"><a href="{{url_for('main.comment',blog_id = blog.id)}}"
