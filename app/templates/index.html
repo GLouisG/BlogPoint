@@ -19,7 +19,7 @@
     <h1>RECENT</h1>
     {%for blog in blogs%}
       <div class="card blogcard" >
-        <h1 class="blogtitle" style="font-weight: bold;">{{blog.title}}</h1>
+        <h1 class="blogtitle" style="font-weight: bold; font-family: 'Staatliches';">{{blog.title}}</h1>
         <p>{{blog.content}}</p>
         <h4>{{blog.user}}</h4>
         <span class="foot"><a href="{{url_for('main.comment',blog_id = blog.id)}}"
