@@ -15,6 +15,8 @@ An application that allows the user to post, view and comment on blogs as well a
 - It is live on Heroku and can be seen by following the link.    
 - Link: http://blogpoint21.herokuapp.com/  
 
+## Demo  
+- ![Screenshot from 2021-09-26 23-14-05](https://user-images.githubusercontent.com/86976233/134822709-8465497e-558a-4b6b-8d4f-9938d75aa55b.png)
 ## License
 - https://choosealicense.com/licenses/mit/
 
