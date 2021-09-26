@@ -9,8 +9,7 @@ from ..email import mail_message
 
 @main.route('/')
 def index():
-  posts = Blog.query.all()
-  blogs = posts.reverse()
+  blogs = Blog.query.all()
   thequote = find_quotes()
   return render_template("index.html", blogs=blogs, thequote=thequote)  
 @main.route('/create_new',methods = ['GET','POST'])
@@ -53,15 +52,17 @@ def delete(id):
     if current_post.user != current_user:
        abort(404)
     db.session.delete(current_post)  
+    db.session.commit()
     return redirect(url_for('.index'))
 
-@main.route('/index/<int:id>/delcomm',methods = ['GET','POST'])
+@main.route('/comment/<int:id>/delcomm',methods = ['GET','POST'])
 @login_required
 def delete_comm(id):
     current_comm = Comment.query.filter_by(id=id).first()
     if current_comm.user != current_user:
        abort(404)
     db.session.delete(current_comm) 
+    db.session.commit()
     return redirect(url_for('.index')) 
 
 @main.route('/user/<uname>')
@@ -70,7 +71,7 @@ def profile(uname):
     user_id = current_user._get_current_object().id
     blogs = Blog.query.filter_by(user_id = user_id).all()
     status = None
-    if current_user.posts:
+    if current_user.blog:
       status = 'Author'
     else:
       status = 'Dedicated Reader'    
@@ -116,7 +117,7 @@ def blog_updater(id):
 @main.route('/subscription/<author>', methods = ['POST','GET'])
 @login_required
 def subscription(author):
-    subber = Sub.query.filter_by(email=current_user.email).first()
+    subber = Sub.query.filter_by(email_add=current_user.email).first()
     if subber:
        db.session.delete(subber)
        db.session.commit()
@@ -124,7 +125,7 @@ def subscription(author):
     else:
       email = current_user._get_current_object().email
       writer = author  
-      new_sub_object = Sub(email = email, writer=writer)
+      new_sub_object = Sub(email_add = email, writer=writer)
       new_sub_object.save_sub()
       return redirect(url_for('.index'))  
     return redirect(url_for('.index'))     
